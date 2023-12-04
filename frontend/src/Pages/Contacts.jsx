@@ -13,13 +13,7 @@ import {
   FormLabel,
   Input,
   Select,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
+  Container,
 } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -51,15 +45,26 @@ function Contacts() {
     });
   };
 
+  const [searchinp, setsearchinp] = useState("");
+
+  const hadelSearch =(e)=>{
+    setsearchinp(e.target.value);
+  }
+
+
   const handelSubmit = () => {
     dispatch(createUser(user));
   };
 
   useEffect(() => {
-    dispatch(getAlluser());
-  }, []);
 
-  
+     let params = {
+      q : searchinp
+     }
+    dispatch(getAlluser(params));
+  }, [searchinp]);
+
+
 
   return (
     <div>
@@ -129,7 +134,11 @@ function Contacts() {
       </Modal>
 
       {/* ------------------------ */}
-      <TableComponent/>
+      <Container maxW="md" mt={10} mb={10}>
+        <Input placeholder="Search User" value={searchinp} onChange={hadelSearch}/>
+      </Container>
+
+      <TableComponent />
     </div>
   );
 }

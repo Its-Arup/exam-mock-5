@@ -28,9 +28,9 @@ export const createUser = (payload) => (dispatch) => {
 export const getAlluser = (params) => (dispatch) => {
   dispatch({ type: GETALLUSERSREQUEST });
   axios({
-    method: "get",
-    url: baseURL,
-    params: params,
+    method : "get",
+    url : baseURL,
+    params : params,
   })
     .then((res) => {
       dispatch({ type: GETALLUSERSSUCCESS, payload: res.data.users });
