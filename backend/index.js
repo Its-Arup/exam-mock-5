@@ -1,5 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
+const { server_Connection } = require("./db");
+const { userRouter } = require("./Routes/user.route");
+require('dotenv').config()
+
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -10,7 +16,18 @@ app.get("/", (req, res) => {
   }
 });
 
+app.use("/users",userRouter)
 
-app.listen(4500, () => {
-  console.log("listening on", 4500);
+
+const PORT = process.env.PORT || 4500 ;
+
+app.listen(PORT, async() => {
+  try {
+    await server_Connection
+    console.log("listening on", PORT);
+  } catch (error) {
+    console.log(error.message)
+  }
 });
+
+
