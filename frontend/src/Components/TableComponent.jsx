@@ -19,6 +19,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Container,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,8 +30,7 @@ function TableComponent() {
     return store.userReducer;
   });
 
-  
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -44,7 +44,7 @@ const dispatch = useDispatch()
     label: "",
     booked_slots: [],
   });
-  const[productid,setProductId]= useState(0);
+  const [productid, setProductId] = useState(0);
 
   const handelChange = (e) => {
     setUser((prev) => {
@@ -55,21 +55,21 @@ const dispatch = useDispatch()
     });
   };
 
-  const handelEditbutton =(id)=>{
-    setProductId(id)
-    onOpen()
-  }
-  
-  const handelEdit = ()=>{
-    dispatch(editUser(productid,user))
-  }
+  const handelEditbutton = (id) => {
+    setProductId(id);
+    onOpen();
+  };
 
-  const handelDelete = (id)=>{
-    dispatch(deleteUser(id))
-  }
-  
+  const handelEdit = () => {
+    dispatch(editUser(productid, user));
+  };
+
+  const handelDelete = (id) => {
+    dispatch(deleteUser(id));
+  };
+
   return (
-    <>
+    <Container maxW="980px" mt={30}>
       <TableContainer>
         <Table variant="striped" colorScheme="teal">
           <Thead>
@@ -90,8 +90,21 @@ const dispatch = useDispatch()
                   <Td>{ele.phone}</Td>
                   <Td>{ele.label}</Td>
                   <Td>
-                    <Button colorScheme="green" onClick={()=>{handelEditbutton(ele._id)}}>Edit</Button>
-                    <Button colorScheme="red" onClick={()=>handelDelete(ele._id)}>Delete</Button>
+                    <Button
+                    mr={2}
+                      colorScheme="green"
+                      onClick={() => {
+                        handelEditbutton(ele._id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => handelDelete(ele._id)}
+                    >
+                      Delete
+                    </Button>
                   </Td>
                 </Tr>
               );
@@ -100,69 +113,69 @@ const dispatch = useDispatch()
         </Table>
       </TableContainer>
       <Modal
-      initialFocusRef={initialRef}
-      finalFocusRef={finalRef}
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Create your account</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody pb={6}>
-          <FormControl>
-            <FormLabel>Full Name</FormLabel>
-            <Input
-              ref={initialRef}
-              placeholder="Full Name"
-              name="name"
-              value={user.name}
-              onChange={handelChange}
-            />
-          </FormControl>
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create your account</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Full Name</FormLabel>
+              <Input
+                ref={initialRef}
+                placeholder="Full Name"
+                name="name"
+                value={user.name}
+                onChange={handelChange}
+              />
+            </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Email</FormLabel>
-            <Input
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handelChange}
-            />
-          </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Email</FormLabel>
+              <Input
+                placeholder="Email"
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handelChange}
+              />
+            </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Phone</FormLabel>
-            <Input
-              placeholder="Phone"
-              type="number"
-              name="phone"
-              value={user.phone}
-              onChange={handelChange}
-            />
-          </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Phone</FormLabel>
+              <Input
+                placeholder="Phone"
+                type="number"
+                name="phone"
+                value={user.phone}
+                onChange={handelChange}
+              />
+            </FormControl>
 
-          <FormControl mt={4}>
-            <Select name="label" onChange={handelChange}>
-              <option value="">Label</option>
-              <option value="work">work</option>
-              <option value="school">school</option>
-              <option value="friends">friends</option>
-              <option value="family">family</option>
-            </Select>
-          </FormControl>
-        </ModalBody>
+            <FormControl mt={4}>
+              <Select name="label" onChange={handelChange}>
+                <option value="">Label</option>
+                <option value="work">work</option>
+                <option value="school">school</option>
+                <option value="friends">friends</option>
+                <option value="family">family</option>
+              </Select>
+            </FormControl>
+          </ModalBody>
 
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handelEdit}>
-            Save
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-    </>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handelEdit}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Container>
   );
 }
 
